@@ -48,13 +48,21 @@ app.post('/searchventbyhospitalname', middleware.checkToken, (req, res) => {
         .find({ 'name': new RegExp(name, 'i') }).toArray().then(result => res.json(result));
 });
 
-app.post('/searchhospital', middleware.checkToken, (req, res) => {
+app.post('/searchhospitalbyname', middleware.checkToken, (req, res) => {
     const name = req.query.name;
     console.log(name);
     const ventilatordeatils = db.collection('hospital')
         .find({ 'name': new RegExp(name, 'i') }).toArray().then(result => res.json(result));
 });
 
+ /*app.get('/searchventilatorname&status', (req, res) => {
+    const status = req.query.status;
+    const name = req.query.name;
+    console.log("searching ventilators and hospital name, please wait a moment");
+    const data = db.collection("ventilators").find({ 'name': new RegExp(name, 'i'),"status": status }).toArray().then(result => res.json(result));
+    res.send("no hospital found :(");
+});
+*/
 
 app.put('/updateventilator', middleware.checkToken, (req, res) => {
     const ventilatorid = { ventilatorid: req.query.ventilatorid };
@@ -90,15 +98,7 @@ app.delete('/deleteventilator', middleware.checkToken, (req, res) => {
     });
 });
 
-/* app.get('/searchventilator', (req, res) => {
-    const status = req.query.status;
-    const name = req.query.name;
-    console.log("searching ventilators, please wait a moment");
-    const data = db.collection("ventilators").find({ "name": name }, { "status": status }).toArray().then(result => res.send(result));
-    res.send("no hospital found :(");
-});
 
-*/
 
 app.listen(3000, (req, res) => {
     console.log("working well");
