@@ -22,18 +22,21 @@ MongoClient.connect(url, (err, client) => {
     console.log(`Database:${dbname}`);
 });
 
+//fetching hospital details
 app.get('/hospital', middleware.checkToken, (req, res) => {
     console.log("processing the data");
     const data = db.collection("hospital").find().toArray()
         .then(result => res.json(result));
 });
 
+// fetching Ventilator details
 app.get('/ventilatorDetails', middleware.checkToken, (req, res) => {
     console.log("processing the data");
     const data = db.collection("ventilators").find().toArray()
         .then(result => (res.json(result)));
 });
 
+//finding ventilators by status
 app.post('/searchventbystatus', middleware.checkToken, (req, res) => {
     const status = req.query.status;
     console.log(status);
@@ -41,6 +44,7 @@ app.post('/searchventbystatus', middleware.checkToken, (req, res) => {
         .find({ "status": status }).toArray().then(result => res.json(result));
 });
 
+//finding ventilator by name of the hospital
 app.post('/searchventbyhospitalname', middleware.checkToken, (req, res) => {
     const name = req.query.name;
     console.log(name);
@@ -48,6 +52,7 @@ app.post('/searchventbyhospitalname', middleware.checkToken, (req, res) => {
         .find({ 'name': new RegExp(name, 'i') }).toArray().then(result => res.json(result));
 });
 
+//finding hospital by name
 app.post('/searchhospitalbyname', middleware.checkToken, (req, res) => {
     const name = req.query.name;
     console.log(name);
@@ -55,7 +60,7 @@ app.post('/searchhospitalbyname', middleware.checkToken, (req, res) => {
         .find({ 'name': new RegExp(name, 'i') }).toArray().then(result => res.json(result));
 });
 
-
+//updating ventilator details 
 app.put('/updateventilator', middleware.checkToken, (req, res) => {
     const ventilatorid = { ventilatorid: req.query.ventilatorid };
     console.log(ventilatorid);
@@ -67,7 +72,7 @@ app.put('/updateventilator', middleware.checkToken, (req, res) => {
     });
 });
 
-
+//add ventilator
 app.post('/addventilator', (req, res) => {
     const hid = req.query.hid;
     const ventid = req.query.ventilatorid;
@@ -80,6 +85,7 @@ app.post('/addventilator', (req, res) => {
     });
 });
 
+
 app.delete('/deleteventilator', middleware.checkToken, (req, res) => {
     const ventilatorid = req.query.ventilatorid;
     console.log(ventilatorid);
@@ -90,8 +96,7 @@ app.delete('/deleteventilator', middleware.checkToken, (req, res) => {
     });
 });
 
-
-
+//delete ventilator by ventilatorid
 app.listen(3000, (req, res) => {
     console.log("working well");
 });
