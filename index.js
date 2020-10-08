@@ -55,14 +55,6 @@ app.post('/searchhospitalbyname', middleware.checkToken, (req, res) => {
         .find({ 'name': new RegExp(name, 'i') }).toArray().then(result => res.json(result));
 });
 
- /*app.get('/searchventilatorname&status', (req, res) => {
-    const status = req.query.status;
-    const name = req.query.name;
-    console.log("searching ventilators and hospital name, please wait a moment");
-    const data = db.collection("ventilators").find({ 'name': new RegExp(name, 'i'),"status": status }).toArray().then(result => res.json(result));
-    res.send("no hospital found :(");
-});
-*/
 
 app.put('/updateventilator', middleware.checkToken, (req, res) => {
     const ventilatorid = { ventilatorid: req.query.ventilatorid };
