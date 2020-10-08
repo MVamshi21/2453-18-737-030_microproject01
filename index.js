@@ -85,7 +85,7 @@ app.post('/addventilator', (req, res) => {
     });
 });
 
-
+//delete ventilator by ventilatorid
 app.delete('/deleteventilator', middleware.checkToken, (req, res) => {
     const ventilatorid = req.query.ventilatorid;
     console.log(ventilatorid);
@@ -96,7 +96,7 @@ app.delete('/deleteventilator', middleware.checkToken, (req, res) => {
     });
 });
 
-//delete ventilator by ventilatorid
+
 app.listen(3000, (req, res) => {
     console.log("working well");
 });
