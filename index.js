@@ -60,6 +60,14 @@ app.post('/searchhospitalbyname', middleware.checkToken, (req, res) => {
         .find({ 'name': new RegExp(name, 'i') }).toArray().then(result => res.json(result));
 });
 
+//finding ventilatorstatusandhospitalsname
+app.post('/searchventilatorbystatusandhospitalname', (req, res) => {
+    const status = req.query.status;
+    const name = req.query.name;
+    console.log("searching ventilators, please wait a moment");
+    const data = db.collection("ventilators").find({ "status": status },{ "name": name }).toArray().then(result => res.json(result));
+});
+
 //updating ventilator details 
 app.put('/updateventilator', middleware.checkToken, (req, res) => {
     const ventilatorid = { ventilatorid: req.query.ventilatorid };
@@ -70,6 +78,7 @@ app.put('/updateventilator', middleware.checkToken, (req, res) => {
         res.json('updated one document');
         if (err) throw err;
     });
+
 });
 
 //add ventilator
@@ -97,6 +106,4 @@ app.delete('/deleteventilator', middleware.checkToken, (req, res) => {
 });
 
 
-app.listen(3000, (req, res) => {
-    console.log("working well");
-});
+app.listen(3000)
